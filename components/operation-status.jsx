@@ -16,7 +16,7 @@ export function OperationStatus() {
 
   const checkOperationStatus = async () => {
     try {
-      const response = await fetch("/api/operation-status", {
+      const response = await fetch("/cx-deployer/api/operation-status", {
         credentials: "include",
       })
       if (response.ok) {

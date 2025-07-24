@@ -22,7 +22,9 @@ export function DeploymentProgress({ deploymentId, onClose }) {
 
   const fetchDeploymentStatus = async () => {
     try {
-      const response = await fetch(`/api/deployment-status/${deploymentId}`)
+      const response = await fetch(`/cx-deployer/api/deployment-status/${deploymentId}`, {
+        credentials: "include"
+      })
       if (response.ok) {
         const data = await response.json()
         setDeployment(data)
@@ -38,17 +40,17 @@ export function DeploymentProgress({ deploymentId, onClose }) {
   }
 
   const getStepStatus = (step) => {
-    if (!deployment?.steps?.[step]) return "pending"
-    return deployment.steps[step].status
+    if (!deployment?.steps?.[step]) return "PENDING"
+    return deployment.steps[step].status?.toUpperCase()
   }
 
   const getStepIcon = (status) => {
     switch (status) {
-      case "completed":
+      case "COMPLETED":
         return <CheckCircle className="h-4 w-4 text-green-500" />
-      case "running":
+      case "RUNNING":
         return <RefreshCw className="h-4 w-4 text-blue-500 animate-spin" />
-      case "failed":
+      case "FAILED":
         return <AlertCircle className="h-4 w-4 text-red-500" />
       default:
         return <Clock className="h-4 w-4 text-gray-400" />
