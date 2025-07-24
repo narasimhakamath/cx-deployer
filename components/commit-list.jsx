@@ -51,7 +51,7 @@ export function CommitList({ selectedBranch, onDeploy, deployingCommit, onError 
         params.append("search", search.trim())
       }
 
-      const response = await fetch(`/cx-deployer/api/commits?${params}`, {
+      const response = await fetch(`/cxdeployer/api/commits?${params}`, {
         credentials: "include",
       })
 

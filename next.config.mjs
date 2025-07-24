@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '/cx-deployer',
+  basePath: '/cxdeployer',
   eslint: {
     ignoreDuringBuilds: true,
   },

@@ -45,7 +45,7 @@ export function BranchSelector({ selectedBranch, onBranchSelect, onError }) {
         params.append("search", search.trim())
       }
 
-      const response = await fetch(`/cx-deployer/api/branches?${params}`, {
+      const response = await fetch(`/cxdeployer/api/branches?${params}`, {
         credentials: "include",
       })
 

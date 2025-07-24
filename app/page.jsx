@@ -56,7 +56,7 @@ export default function DeploymentManager() {
   const checkAuth = async () => {
     try {
       console.log("Checking authentication...")
-      const response = await fetch("/cx-deployer/api/auth/me", {
+      const response = await fetch("/cxdeployer/api/auth/me", {
         credentials: "include",
       })
 
@@ -80,7 +80,7 @@ export default function DeploymentManager() {
 
   const handleLogout = async () => {
     try {
-      await fetch("/cx-deployer/api/auth/logout", {
+      await fetch("/cxdeployer/api/auth/logout", {
         method: "POST",
         credentials: "include",
       })
@@ -92,7 +92,7 @@ export default function DeploymentManager() {
 
   const fetchCurrentDeployment = async () => {
     try {
-      const response = await fetch("/cx-deployer/api/current-deployment", {
+      const response = await fetch("/cxdeployer/api/current-deployment", {
         credentials: "include",
       })
       if (response.status === 401) {
@@ -114,7 +114,7 @@ export default function DeploymentManager() {
   const pullLatestCode = async () => {
     setLoading(true)
     try {
-      const response = await fetch("/cx-deployer/api/pull-code", {
+      const response = await fetch("/cxdeployer/api/pull-code", {
         method: "POST",
         credentials: "include",
       })
@@ -161,7 +161,7 @@ export default function DeploymentManager() {
   const deployCommit = async (commit) => {
     setDeployingCommit(commit.hash)
     try {
-      const response = await fetch("/cx-deployer/api/deploy", {
+      const response = await fetch("/cxdeployer/api/deploy", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

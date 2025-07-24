@@ -22,7 +22,7 @@ export function DeploymentProgress({ deploymentId, onClose }) {
 
   const fetchDeploymentStatus = async () => {
     try {
-      const response = await fetch(`/cx-deployer/api/deployment-status/${deploymentId}`, {
+      const response = await fetch(`/cxdeployer/api/deployment-status/${deploymentId}`, {
         credentials: "include"
       })
       if (response.ok) {
