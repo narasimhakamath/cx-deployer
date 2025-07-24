@@ -38,7 +38,7 @@ export function BranchSelector({ selectedBranch, onBranchSelect, onError }) {
     try {
       const params = new URLSearchParams({
         page: page.toString(),
-        limit: "15",
+        limit: "10",
       })
 
       if (search.trim()) {
@@ -95,7 +95,7 @@ export function BranchSelector({ selectedBranch, onBranchSelect, onError }) {
         <CardDescription>
           {searchInfo.hasSearch
             ? `Showing branches matching "${searchInfo.term}"`
-            : "Select a branch to view its commits"}
+            : "Select a branch"}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

@@ -119,7 +119,7 @@ export function CommitList({ selectedBranch, onDeploy, deployingCommit, onError 
         <CardDescription>
           {searchInfo.hasSearch
             ? `Showing commits matching "${searchInfo.term}" in ${selectedBranch}`
-            : `Deploy any commit from the ${selectedBranch} branch`}
+            : `Deploy any commit`}
         </CardDescription>
       </CardHeader>
       <CardContent>
