@@ -41,7 +41,7 @@ export default function SignupPage() {
     }
 
     try {
-      const response = await fetch("./api/auth/signup", {
+      const response = await fetch("/cxdeployer/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
