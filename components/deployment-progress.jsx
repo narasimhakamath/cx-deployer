@@ -61,8 +61,8 @@ export function DeploymentProgress({ deploymentId, onClose }) {
     if (!deployment) return 0
 
     const steps = ["checkout", "build", "deploy"]
-    const completedSteps = steps.filter((step) => getStepStatus(step) === "completed").length
-    const runningSteps = steps.filter((step) => getStepStatus(step) === "running").length
+    const completedSteps = steps.filter((step) => getStepStatus(step) === "COMPLETED").length
+    const runningSteps = steps.filter((step) => getStepStatus(step) === "RUNNING").length
 
     return ((completedSteps + runningSteps * 0.5) / steps.length) * 100
   }
