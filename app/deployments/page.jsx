@@ -73,7 +73,7 @@ export default function DeploymentsPage() {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch("/cx-deployer/api/auth/me", {
+      const response = await fetch("/cxdeployer/api/auth/me", {
         credentials: "include",
       })
 
@@ -111,7 +111,7 @@ export default function DeploymentsPage() {
         params.append("search", debouncedSearchTerm.trim())
       }
 
-      const response = await fetch(`/cx-deployer/api/deployments?${params}`, {
+      const response = await fetch(`/cxdeployer/api/deployments?${params}`, {
         credentials: "include",
       })
 
