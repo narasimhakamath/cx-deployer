@@ -110,11 +110,11 @@ export function CommitList({ selectedBranch, onDeploy, deployingCommit, onError 
           <GitCommit className="h-5 w-5" />
           Commits
           <Badge variant="outline">{selectedBranch}</Badge>
-          {searchInfo.hasSearch ? (
+          {/* {searchInfo.hasSearch ? (
             <Badge variant="secondary">{searchInfo.totalMatches} matches</Badge>
           ) : (
             pagination.totalItems > 0 && <Badge variant="secondary">{pagination.totalItems} commits</Badge>
-          )}
+          )} */}
         </CardTitle>
         <CardDescription>
           {searchInfo.hasSearch

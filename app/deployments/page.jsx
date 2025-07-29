@@ -214,7 +214,7 @@ export default function DeploymentsPage() {
           <Link href="/">
             <Button variant="outline" size="sm">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Dashboard
+              {/* Back to Dashboard */}
             </Button>
           </Link>
           <div>

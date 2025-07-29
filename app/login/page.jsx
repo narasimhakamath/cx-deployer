@@ -52,9 +52,9 @@ export default function LoginPage() {
         <CardHeader className="text-center">
           <CardTitle className="flex items-center justify-center gap-2">
             <LogIn className="h-6 w-6" />
-            Login to Deployment Manager
+            Login to CXFlow
           </CardTitle>
-          <CardDescription>Sign in to manage your Angular application deployments</CardDescription>
+          <CardDescription>Sign in to manage your DFL CX deployments</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">

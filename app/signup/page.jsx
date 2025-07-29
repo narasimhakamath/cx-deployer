@@ -103,7 +103,7 @@ export default function SignupPage() {
             <UserPlus className="h-6 w-6" />
             Create Account
           </CardTitle>
-          <CardDescription>Sign up for Deployment Manager access</CardDescription>
+          <CardDescription>Sign up for CXFlow access</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">

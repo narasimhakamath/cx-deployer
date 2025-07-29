@@ -84,13 +84,13 @@ export function BranchSelector({ selectedBranch, onBranchSelect, onError }) {
         <CardTitle className="flex items-center gap-2">
           <GitBranch className="h-5 w-5" />
           Branches
-          {searchInfo.hasSearch ? (
+          {/* {searchInfo.hasSearch ? (
             <Badge variant="outline">
               {searchInfo.totalMatches} of {searchInfo.totalBranches}
             </Badge>
           ) : (
             <Badge variant="outline">{pagination.totalItems} total</Badge>
-          )}
+          )} */}
         </CardTitle>
         <CardDescription>
           {searchInfo.hasSearch

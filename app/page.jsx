@@ -291,14 +291,14 @@ export default function DeploymentManager() {
 
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Deployment Manager</h1>
-          <p className="text-muted-foreground">Manage your Angular frontend deployments</p>
+          <h1 className="text-3xl font-bold">CXFlow</h1>
+          <p className="text-muted-foreground">Manage your DFL CX deployments</p>
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <User className="h-4 w-4" />
             <span className="text-sm font-medium">{user.name}</span>
-            <Badge variant="secondary">{user.email}</Badge>
+            {/* <Badge variant="secondary">{user.email}</Badge> */}
           </div>
           <Link href="/deployments">
             <Button variant="outline" size="sm">
