@@ -1,82 +1,100 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { GitBranch, Search, ChevronLeft, ChevronRight, X } from "lucide-react"
-import { useDebounce } from "@/hooks/use-debounce"
+import { useState, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  GitBranch,
+  Search,
+  ChevronLeft,
+  ChevronRight,
+  X,
+  GitCommit,
+} from "lucide-react";
+import { useDebounce } from "@/hooks/use-debounce";
 
 export function BranchSelector({ selectedBranch, onBranchSelect, onError }) {
-  const [branches, setBranches] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [searchTerm, setSearchTerm] = useState("")
+  const [branches, setBranches] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const [pagination, setPagination] = useState({
     currentPage: 1,
     totalPages: 1,
     hasNextPage: false,
     hasPreviousPage: false,
     totalItems: 0,
-  })
+  });
   const [searchInfo, setSearchInfo] = useState({
     hasSearch: false,
     totalMatches: 0,
     totalBranches: 0,
-  })
+  });
 
   // Debounce search term to avoid too many API calls
-  const debouncedSearchTerm = useDebounce(searchTerm, 500)
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   useEffect(() => {
-    fetchBranches(1, debouncedSearchTerm)
-  }, [debouncedSearchTerm])
+    fetchBranches(1, debouncedSearchTerm);
+  }, [debouncedSearchTerm]);
 
   const fetchBranches = async (page = 1, search = "") => {
-    setLoading(true)
+    setLoading(true);
     try {
       const params = new URLSearchParams({
         page: page.toString(),
         limit: "10",
-      })
+      });
 
       if (search.trim()) {
-        params.append("search", search.trim())
+        params.append("search", search.trim());
       }
 
       const response = await fetch(`/cxdeployer/api/branches?${params}`, {
         credentials: "include",
-      })
+      });
 
       if (response.status === 401) {
-        onError("Authentication required")
-        return
+        onError("Authentication required");
+        return;
       }
 
-      const data = await response.json()
-      setBranches(data.branches)
-      setPagination(data.pagination)
-      setSearchInfo(data.search)
+      const data = await response.json();
+
+      // Filter out origin branches
+      const filteredBranches = data.branches.filter(
+        (branch) => branch.name !== "origin"
+      );
+      setBranches(filteredBranches);
+      setPagination(data.pagination);
+      setSearchInfo(data.search);
 
       // Auto-select first branch if none selected and no search
-      if (data.branches.length > 0 && !selectedBranch && !search.trim()) {
-        onBranchSelect(data.branches[0])
+      if (filteredBranches.length > 0 && !selectedBranch && !search.trim()) {
+        onBranchSelect(filteredBranches[0].name);
       }
     } catch (error) {
-      onError("Failed to fetch branches")
+      onError("Failed to fetch branches");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handlePageChange = (newPage) => {
-    fetchBranches(newPage, debouncedSearchTerm)
-  }
+    fetchBranches(newPage, debouncedSearchTerm);
+  };
 
   const clearSearch = () => {
-    setSearchTerm("")
-  }
+    setSearchTerm("");
+  };
 
   return (
     <Card>
@@ -84,13 +102,6 @@ export function BranchSelector({ selectedBranch, onBranchSelect, onError }) {
         <CardTitle className="flex items-center gap-2">
           <GitBranch className="h-5 w-5" />
           Branches
-          {/* {searchInfo.hasSearch ? (
-            <Badge variant="outline">
-              {searchInfo.totalMatches} of {searchInfo.totalBranches}
-            </Badge>
-          ) : (
-            <Badge variant="outline">{pagination.totalItems} total</Badge>
-          )} */}
         </CardTitle>
         <CardDescription>
           {searchInfo.hasSearch
@@ -123,7 +134,8 @@ export function BranchSelector({ selectedBranch, onBranchSelect, onError }) {
         {/* Search Results Info */}
         {searchInfo.hasSearch && (
           <div className="text-sm text-muted-foreground">
-            Found {searchInfo.totalMatches} branches matching "{searchInfo.term}"
+            Found {searchInfo.totalMatches} branches matching "{searchInfo.term}
+            "
           </div>
         )}
 
@@ -132,29 +144,41 @@ export function BranchSelector({ selectedBranch, onBranchSelect, onError }) {
           <div className="space-y-2">
             {loading ? (
               <div className="flex items-center justify-center py-8">
-                <div className="text-sm text-muted-foreground">Loading branches...</div>
+                <div className="text-sm text-muted-foreground">
+                  Loading branches...
+                </div>
               </div>
             ) : branches.length > 0 ? (
               branches.map((branch) => (
                 <div
-                  key={branch}
-                  onClick={() => onBranchSelect(branch)}
+                  key={branch.name}
+                  onClick={() => onBranchSelect(branch.name)}
                   className={`p-3 rounded-lg border cursor-pointer transition-colors hover:bg-muted/50 ${
-                    selectedBranch === branch
+                    selectedBranch === branch.name
                       ? "bg-primary/10 border-primary text-primary"
                       : "bg-background hover:bg-muted/50"
                   }`}
                 >
-                  <div className="flex items-center gap-2">
-                    <GitBranch className="h-4 w-4" />
-                    <span className="font-medium">{branch}</span>
-                    {selectedBranch === branch && <Badge variant="secondary">Selected</Badge>}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <GitBranch className="h-4 w-4" />
+                      <span className="font-medium">{branch.name}</span>
+                      {selectedBranch === branch.name && (
+                        <Badge variant="secondary">Selected</Badge>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                      <GitCommit className="h-3 w-3" />
+                      <span>{branch.commitCount}</span>
+                    </div>
                   </div>
                 </div>
               ))
             ) : (
               <div className="text-center py-8 text-muted-foreground">
-                {searchInfo.hasSearch ? `No branches match "${searchInfo.term}"` : "No branches found"}
+                {searchInfo.hasSearch
+                  ? `No branches match "${searchInfo.term}"`
+                  : "No branches found"}
               </div>
             )}
           </div>
@@ -188,5 +212,5 @@ export function BranchSelector({ selectedBranch, onBranchSelect, onError }) {
         )}
       </CardContent>
     </Card>
-  )
+  );
 }
